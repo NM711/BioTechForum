@@ -1,0 +1,27 @@
+{
+  "name": "bio_tech_forum",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf ./build",
+    "prod": "npm run build && node --env-file=.env.app ./build/index.js",
+    "dev": "npm run build && node --env-file=.env.test.app ./build/index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "kysely": "^0.27.3",
+    "mysql2": "^3.10.1",
+    "nodemailer": "^6.9.14",
+    "otp-generator": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/cookie-parser": "^1.4.7",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.10",
+    "@types/nodemailer": "^6.4.15",
+    "@types/otp-generator": "^4.0.2",
+    "typescript": "^5.5.3"
+  }
+}

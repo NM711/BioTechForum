@@ -1,0 +1,16 @@
+{
+  "name": "tech_forum_tests",
+  "author": "NM711",
+  "scripts": {
+    "setup": "rm -rf ./build && tsc",
+    "api-test": "sleep 5 && npm run setup && node --env-file=.env.test ./build/unit_tests/index.test.js"
+  },
+  "dependencies": {
+    "kysely": "^0.27.3",
+    "mysql2": "^3.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3"
+  }
+}

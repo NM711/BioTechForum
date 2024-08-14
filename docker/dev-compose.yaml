@@ -1,0 +1,37 @@
+services:
+  api:
+    build: ../src/api
+    env_file: "../src/api/.env.app"
+    environment:
+      MODE: "PROD"
+    expose:
+      - "3000"
+    depends_on:
+      - mysql
+
+  # We only really need this once we have the frontend up.
+  # To secure connection between client and reverse proxy. After that everything will be handled internally
+  caddy:
+    image: caddy:2.8-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    depends_on:
+      - api
+      
+  mysql:
+    image: mysql/mysql-server
+    restart: always
+    env_file: "./mysql/.env.db"
+    expose:
+      - "3306"
+    volumes:
+      - ./mysql/init/techforum_schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./mysql/init/main:/docker-entrypoint-initdb.d
+      - database:/var/lib/mysql
+volumes:
+  database:
+  caddy_data:

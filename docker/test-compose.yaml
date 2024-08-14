@@ -1,0 +1,31 @@
+# Service used for integration testing.
+
+services:
+  api-test:
+    build: ../src/api
+    env_file: "../src/api/.env.test.app"
+    environment:
+      MODE: "DEV"
+    expose:
+      - "3000"
+    depends_on:
+      - mysql-test
+
+  api-test-suite:
+    build: ../tests/api
+    env_file: "../tests/api/.env.test"
+    depends_on:
+      - api-test
+
+  mysql-test:
+    image: mysql/mysql-server
+    restart: always
+    env_file: "./mysql/.env.test.db"
+    expose:
+      - "3306"
+    volumes:
+      - ./mysql/init/techforum_schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./mysql/init/test:/docker-entrypoint-initdb.d
+      - test-database:/var/lib/mysql
+volumes:
+  test-database:
